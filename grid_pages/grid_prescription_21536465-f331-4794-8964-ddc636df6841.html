@@ -1,0 +1,154 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="dhtmlx/dhtmlxlayout.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxlayout_dhx_skyblue.css"></link>
+<link rel="STYLESHEET" type="text/css" href="dhtmlx/dhtmlxgrid.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxgrid_dhx_skyblue.css"></link>
+<link rel="STYLESHEET" type="text/css" href="dhtmlx/dhtmlxtabbar.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxtoolbar_dhx_skyblue.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxform_dhx_skyblue.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxmessage_dhx_skyblue.css"></link>
+
+<script src="dhtmlx/dhtmlxcommon.js"></script>
+<script src="dhtmlx/dhtmlxlayout.js"></script>
+<script src="dhtmlx/dhtmlxcontainer.js"></script>
+<script src="dhtmlx/dhtmlxgrid.js"></script>        
+<script src="dhtmlx/dhtmlxgridcell.js"></script> 
+<script src="dhtmlx/dhtmlxgrid_filter.js"></script>
+<script src="dhtmlx/dhtmlxtoolbar.js"></script>
+<script src="dhtmlx/dhtmlxtabbar.js"></script>
+<script src="dhtmlx/dhtmlxform.js"></script>
+<script src="dhtmlx/dhtmlxmessage.js"></script>
+<script src="dhtmlx/dhtmlxgrid_export.js"></script>
+<script src="dhtmlx/dhtmlxgrid_nxml.js"></script>
+<script src="javascript/view.js"></script>
+
+
+
+<script src="ribbonbar/ribbonbar_DE_0a078780-bc09-11e3-a5e2-0800200c9a66.js"></script>
+
+
+<script language='javascript'>
+
+var main_layout;
+var main_grid;
+
+
+function do_on_load()
+{
+  
+main_layout= new dhtmlXLayoutObject(document.body, "3E");
+var cell_ribbonbar = main_layout.cells("a");
+var cell_detail = main_layout.cells("b");
+var cell_grid = main_layout.cells("c");
+main_layout.cells("a").setWidth("*");
+main_layout.cells("a").setHeight("85");
+main_layout.cells("b").setWidth("*");
+main_layout.cells("b").setHeight("200");
+main_layout.cells("a").fixSize(false,true);
+main_layout.cells("a").hideHeader();
+main_layout.cells("b").setText("Standart View prescription");
+var ribbon_bar = new cls_ribbonbar(main_layout.cells("a"),true,true);
+$KERNEL_VIEW.set_ribbon_bar(ribbon_bar);
+main_layout.cells("c").setWidth("*");
+main_layout.cells("c").setHeight("*");
+main_layout.cells("c").setText("Standart View prescription");
+main_grid = main_layout.cells("c").attachGrid();
+main_grid.setImagePath("dhtmlx/imgs/");
+var frm = cell_detail.attachForm();
+$KERNEL_VIEW.set_detail_form(frm);
+form_structure = [
+{type:"settings",position:"label-left", labelWidth: 200 , formWidth : "*"},
+{type: "fieldset",name:"data", label: "Data", list:[
+{type: "input", name: "person.name", label: "person.name", width : "500"}
+,{type: "input", name: "prescription.ik", label: "prescription.ik", width : "500"}
+,{type: "input", name: "prescription.insurance_name", label: "prescription.insurance_name", width : "500"}
+,{type: "input", name: "insurance.name", label: "insurance.name", width : "500"}
+,{type: "input", name: "prescription.memberno", label: "prescription.memberno", width : "500"}
+,{type: "input", name: "prescription.memberstate", label: "prescription.memberstate", width : "500"}
+,{type: "input", name: "prescription.positionnumber1", label: "prescription.positionnumber1", width : "500"}
+,{type: "input", name: "prescription.positionsnumber2", label: "prescription.positionsnumber2", width : "500"}
+,{type: "input", name: "prescription.maxunits_applied", label: "prescription.maxunits_applied", width : "500"}
+,{type: "input", name: "prescription.maxunitsperweek_applied", label: "prescription.maxunitsperweek_applied", width : "500"}
+,{type: "input", name: "prescription.maxmonths_applied", label: "prescription.maxmonths_applied", width : "500"}
+,{type: "input", name: "prescription.maxunits_issued", label: "prescription.maxunits_issued", width : "500"}
+,{type: "input", name: "prescription.maxunitsperweek_issued", label: "prescription.maxunitsperweek_issued", width : "500"}
+,{type: "input", name: "prescription.maxmonths_issued", label: "prescription.maxmonths_issued", width : "500"}
+,{type: "input", name: "prescription.lanr", label: "prescription.lanr", width : "500"}
+,{type: "input", name: "prescription.betrno", label: "prescription.betrno", width : "500"}
+,{type: "input", name: "prescription.validfrom", label: "prescription.validfrom", width : "500"}
+,{type: "input", name: "prescription.validtil", label: "prescription.validtil", width : "500"}
+,{type: "input", name: "prescription.insurance_approval_date", label: "prescription.insurance_approval_date", width : "500"}
+,{type: "input", name: "prescription.physician_applicatiom_date", label: "prescription.physician_applicatiom_date", width : "500"}
+,{type: "input", name: "prescription.patient_signature_date", label: "prescription.patient_signature_date", width : "500"}
+,{type: "input", name: "prescription.startdate", label: "prescription.startdate", width : "500"}
+,{type: "input", name: "prescription.issuedate", label: "prescription.issuedate", width : "500"}
+,{type: "input", name: "prescription_type.name", label: "prescription_type.name", width : "500"}
+,{type: "input", name: "prescription.diagnosis", label: "prescription.diagnosis", width : "500"}
+,{type: "input", name: "prescription.damage", label: "prescription.damage", width : "500"}
+,{type: "input", name: "prescription.goal", label: "prescription.goal", width : "500"}
+,{type: "input", name: "sport.name", label: "sport.name", width : "500"}
+]}
+];
+frm.loadStruct(form_structure, "json");
+
+frm.setFormReadOnly = function(readonly)
+{
+frm.is_readonly = readonly;
+this.setReadonly("prescription.id",readonly);
+this.setReadonly("person.name",readonly);
+this.setReadonly("prescription.ik",readonly);
+this.setReadonly("prescription.insurance_name",readonly);
+this.setReadonly("insurance.name",readonly);
+this.setReadonly("prescription.memberno",readonly);
+this.setReadonly("prescription.memberstate",readonly);
+this.setReadonly("prescription.positionnumber1",readonly);
+this.setReadonly("prescription.positionsnumber2",readonly);
+this.setReadonly("prescription.maxunits_applied",readonly);
+this.setReadonly("prescription.maxunitsperweek_applied",readonly);
+this.setReadonly("prescription.maxmonths_applied",readonly);
+this.setReadonly("prescription.maxunits_issued",readonly);
+this.setReadonly("prescription.maxunitsperweek_issued",readonly);
+this.setReadonly("prescription.maxmonths_issued",readonly);
+this.setReadonly("prescription.lanr",readonly);
+this.setReadonly("prescription.betrno",readonly);
+this.setReadonly("prescription.validfrom",readonly);
+this.setReadonly("prescription.validtil",readonly);
+this.setReadonly("prescription.insurance_approval_date",readonly);
+this.setReadonly("prescription.physician_applicatiom_date",readonly);
+this.setReadonly("prescription.patient_signature_date",readonly);
+this.setReadonly("prescription.startdate",readonly);
+this.setReadonly("prescription.issuedate",readonly);
+this.setReadonly("prescription_type.name",readonly);
+this.setReadonly("prescription.diagnosis",readonly);
+this.setReadonly("prescription.damage",readonly);
+this.setReadonly("prescription.goal",readonly);
+this.setReadonly("sport.name",readonly);
+}
+main_grid.setHeader("person.name,prescription.ik,prescription.insurance_name,insurance.name,prescription.memberno,prescription.memberstate,prescription.positionnumber1,prescription.positionsnumber2,prescription.maxunits_applied,prescription.maxunitsperweek_applied,prescription.maxmonths_applied,prescription.maxunits_issued,prescription.maxunitsperweek_issued,prescription.maxmonths_issued,prescription.lanr,prescription.betrno,prescription.validfrom,prescription.validtil,prescription.insurance_approval_date,prescription.physician_applicatiom_date,prescription.patient_signature_date,prescription.startdate,prescription.issuedate,prescription_type.name,prescription.diagnosis,prescription.damage,prescription.goal,sport.name");
+main_grid.setInitWidths("500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,*");
+main_grid.setColumnIds("person.name,prescription.ik,prescription.insurance_name,insurance.name,prescription.memberno,prescription.memberstate,prescription.positionnumber1,prescription.positionsnumber2,prescription.maxunits_applied,prescription.maxunitsperweek_applied,prescription.maxmonths_applied,prescription.maxunits_issued,prescription.maxunitsperweek_issued,prescription.maxmonths_issued,prescription.lanr,prescription.betrno,prescription.validfrom,prescription.validtil,prescription.insurance_approval_date,prescription.physician_applicatiom_date,prescription.patient_signature_date,prescription.startdate,prescription.issuedate,prescription_type.name,prescription.diagnosis,prescription.damage,prescription.goal,sport.name");
+main_grid.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
+main_grid.setColSorting("str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
+main_grid.setColTypes("ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed");
+main_grid.attachHeader("#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search");
+main_grid.init();
+main_grid.setSkin("dhx_skyblue");
+$KERNEL_VIEW.set_main_grid(main_grid);
+$KERNEL_VIEW.init_view();
+main_grid.load("prescription.php?v=21536465-f331-4794-8964-ddc636df6841&f=json","json");
+
+
+}
+
+</script>
+ 
+
+
+
+</head>
+<body onload="do_on_load()">
+
+</body>
+
+</html>

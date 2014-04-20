@@ -1,0 +1,118 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="dhtmlx/dhtmlxlayout.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxlayout_dhx_skyblue.css"></link>
+<link rel="STYLESHEET" type="text/css" href="dhtmlx/dhtmlxgrid.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxgrid_dhx_skyblue.css"></link>
+<link rel="STYLESHEET" type="text/css" href="dhtmlx/dhtmlxtabbar.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxtoolbar_dhx_skyblue.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxform_dhx_skyblue.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxmessage_dhx_skyblue.css"></link>
+
+<script src="dhtmlx/dhtmlxcommon.js"></script>
+<script src="dhtmlx/dhtmlxlayout.js"></script>
+<script src="dhtmlx/dhtmlxcontainer.js"></script>
+<script src="dhtmlx/dhtmlxgrid.js"></script>        
+<script src="dhtmlx/dhtmlxgridcell.js"></script> 
+<script src="dhtmlx/dhtmlxgrid_filter.js"></script>
+<script src="dhtmlx/dhtmlxtoolbar.js"></script>
+<script src="dhtmlx/dhtmlxtabbar.js"></script>
+<script src="dhtmlx/dhtmlxform.js"></script>
+<script src="dhtmlx/dhtmlxmessage.js"></script>
+<script src="dhtmlx/dhtmlxgrid_export.js"></script>
+<script src="dhtmlx/dhtmlxgrid_nxml.js"></script>
+<script src="javascript/view.js"></script>
+
+
+
+<script src="ribbonbar/ribbonbar_DE_0a078780-bc09-11e3-a5e2-0800200c9a66.js"></script>
+
+
+<script language='javascript'>
+
+var main_layout;
+var main_grid;
+
+
+function do_on_load()
+{
+  
+main_layout= new dhtmlXLayoutObject(document.body, "3E");
+var cell_ribbonbar = main_layout.cells("a");
+var cell_detail = main_layout.cells("b");
+var cell_grid = main_layout.cells("c");
+main_layout.cells("a").setWidth("*");
+main_layout.cells("a").setHeight("85");
+main_layout.cells("b").setWidth("*");
+main_layout.cells("b").setHeight("200");
+main_layout.cells("a").fixSize(false,true);
+main_layout.cells("a").hideHeader();
+main_layout.cells("b").setText("Standart View posting_header");
+var ribbon_bar = new cls_ribbonbar(main_layout.cells("a"),true,true);
+$KERNEL_VIEW.set_ribbon_bar(ribbon_bar);
+main_layout.cells("c").setWidth("*");
+main_layout.cells("c").setHeight("*");
+main_layout.cells("c").setText("Standart View posting_header");
+main_grid = main_layout.cells("c").attachGrid();
+main_grid.setImagePath("dhtmlx/imgs/");
+var frm = cell_detail.attachForm();
+$KERNEL_VIEW.set_detail_form(frm);
+form_structure = [
+{type:"settings",position:"label-left", labelWidth: 200 , formWidth : "*"},
+{type: "fieldset",name:"data", label: "Data", list:[
+{type: "input", name: "posting_header.remark", label: "posting_header.remark", width : "500"}
+,{type: "input", name: "posting_header.systemremark", label: "posting_header.systemremark", width : "500"}
+,{type: "input", name: "posting_header.remark", label: "posting_header.remark", width : "500"}
+,{type: "input", name: "offer_event.data1", label: "offer_event.data1", width : "500"}
+,{type: "input", name: "offer_event.data2", label: "offer_event.data2", width : "500"}
+,{type: "input", name: "posting_header.period", label: "posting_header.period", width : "500"}
+,{type: "input", name: "posting_header.systemremark", label: "posting_header.systemremark", width : "500"}
+,{type: "input", name: "posting_header.duedate", label: "posting_header.duedate", width : "500"}
+,{type: "input", name: "posting_header.paymenttype", label: "posting_header.paymenttype", width : "500"}
+,{type: "input", name: "contract.contractno", label: "contract.contractno", width : "500"}
+]}
+];
+frm.loadStruct(form_structure, "json");
+
+frm.setFormReadOnly = function(readonly)
+{
+frm.is_readonly = readonly;
+this.setReadonly("posting_header.id",readonly);
+this.setReadonly("posting_header.remark",readonly);
+this.setReadonly("posting_header.systemremark",readonly);
+this.setReadonly("posting_header.remark",readonly);
+this.setReadonly("offer_event.data1",readonly);
+this.setReadonly("offer_event.data2",readonly);
+this.setReadonly("posting_header.period",readonly);
+this.setReadonly("posting_header.systemremark",readonly);
+this.setReadonly("posting_header.duedate",readonly);
+this.setReadonly("posting_header.paymenttype",readonly);
+this.setReadonly("contract.contractno",readonly);
+}
+main_grid.setHeader("posting_header.remark,posting_header.systemremark,posting_header.remark,offer_event.data1,offer_event.data2,posting_header.period,posting_header.systemremark,posting_header.duedate,posting_header.paymenttype,contract.contractno");
+main_grid.setInitWidths("500,500,500,500,500,500,500,500,500,*");
+main_grid.setColumnIds("posting_header.remark,posting_header.systemremark,posting_header.remark,offer_event.data1,offer_event.data2,posting_header.period,posting_header.systemremark,posting_header.duedate,posting_header.paymenttype,contract.contractno");
+main_grid.setColAlign("left,left,left,left,left,left,left,left,left,left");
+main_grid.setColSorting("str,str,str,str,str,str,str,str,str,str");
+main_grid.setColTypes("ed,ed,ed,ed,ed,ed,ed,ed,ed,ed");
+main_grid.attachHeader("#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search");
+main_grid.init();
+main_grid.setSkin("dhx_skyblue");
+$KERNEL_VIEW.set_main_grid(main_grid);
+$KERNEL_VIEW.init_view();
+main_grid.load("posting_header.php?v=085e4ede-0abd-4023-8d75-a115f347b6e4&f=json","json");
+
+
+}
+
+</script>
+ 
+
+
+
+</head>
+<body onload="do_on_load()">
+
+</body>
+
+</html>

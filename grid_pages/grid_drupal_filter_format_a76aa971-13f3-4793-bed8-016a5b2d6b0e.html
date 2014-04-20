@@ -1,0 +1,100 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="dhtmlx/dhtmlxlayout.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxlayout_dhx_skyblue.css"></link>
+<link rel="STYLESHEET" type="text/css" href="dhtmlx/dhtmlxgrid.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxgrid_dhx_skyblue.css"></link>
+<link rel="STYLESHEET" type="text/css" href="dhtmlx/dhtmlxtabbar.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxtoolbar_dhx_skyblue.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxform_dhx_skyblue.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxmessage_dhx_skyblue.css"></link>
+
+<script src="dhtmlx/dhtmlxcommon.js"></script>
+<script src="dhtmlx/dhtmlxlayout.js"></script>
+<script src="dhtmlx/dhtmlxcontainer.js"></script>
+<script src="dhtmlx/dhtmlxgrid.js"></script>        
+<script src="dhtmlx/dhtmlxgridcell.js"></script> 
+<script src="dhtmlx/dhtmlxgrid_filter.js"></script>
+<script src="dhtmlx/dhtmlxtoolbar.js"></script>
+<script src="dhtmlx/dhtmlxtabbar.js"></script>
+<script src="dhtmlx/dhtmlxform.js"></script>
+<script src="dhtmlx/dhtmlxmessage.js"></script>
+<script src="dhtmlx/dhtmlxgrid_export.js"></script>
+<script src="dhtmlx/dhtmlxgrid_nxml.js"></script>
+<script src="javascript/view.js"></script>
+
+
+
+
+
+<script language='javascript'>
+
+var main_layout;
+var main_grid;
+
+
+function do_on_load()
+{
+  
+main_layout= new dhtmlXLayoutObject(document.body, "2E");
+var cell_detail = main_layout.cells("a");
+var cell_grid = main_layout.cells("c");
+main_layout.cells("a").setWidth("*");
+main_layout.cells("a").setHeight("200");
+main_layout.cells("a").setText("Standart View drupal_filter_format");
+main_layout.cells("c").setWidth("*");
+main_layout.cells("c").setHeight("*");
+main_layout.cells("c").setText("Standart View drupal_filter_format");
+main_grid = main_layout.cells("c").attachGrid();
+main_grid.setImagePath("dhtmlx/imgs/");
+var frm = cell_detail.attachForm();
+$KERNEL_VIEW.set_detail_form(frm);
+form_structure = [
+{type:"settings",position:"label-left", labelWidth: 200 , formWidth : "*"},
+{type: "fieldset",name:"data", label: "Data", list:[
+{type: "input", name: "drupal_filter_format.format", label: "drupal_filter_format.format", width : "500"}
+,{type: "input", name: "drupal_filter_format.name", label: "drupal_filter_format.name", width : "500"}
+,{type: "input", name: "drupal_filter_format.cache", label: "drupal_filter_format.cache", width : "500"}
+,{type: "input", name: "drupal_filter_format.status", label: "drupal_filter_format.status", width : "500"}
+,{type: "input", name: "drupal_filter_format.weight", label: "drupal_filter_format.weight", width : "500"}
+]}
+];
+frm.loadStruct(form_structure, "json");
+
+frm.setFormReadOnly = function(readonly)
+{
+frm.is_readonly = readonly;
+this.setReadonly("drupal_filter_format.format",readonly);
+this.setReadonly("drupal_filter_format.name",readonly);
+this.setReadonly("drupal_filter_format.cache",readonly);
+this.setReadonly("drupal_filter_format.status",readonly);
+this.setReadonly("drupal_filter_format.weight",readonly);
+this.setReadonly("drupal_filter_format.id",readonly);
+}
+main_grid.setHeader("drupal_filter_format.format,drupal_filter_format.name,drupal_filter_format.cache,drupal_filter_format.status,drupal_filter_format.weight");
+main_grid.setInitWidths("500,500,500,500,*");
+main_grid.setColumnIds("drupal_filter_format.format,drupal_filter_format.name,drupal_filter_format.cache,drupal_filter_format.status,drupal_filter_format.weight");
+main_grid.setColAlign("left,left,left,left,left");
+main_grid.setColSorting("str,str,str,str,str");
+main_grid.setColTypes("ed,ed,ed,ed,ed");
+main_grid.attachHeader("#text_search,#text_search,#text_search,#text_search,#text_search");
+main_grid.init();
+main_grid.setSkin("dhx_skyblue");
+$KERNEL_VIEW.set_main_grid(main_grid);
+$KERNEL_VIEW.init_view();
+main_grid.load("drupal_filter_format.php?v=a76aa971-13f3-4793-bed8-016a5b2d6b0e&f=json","json");
+
+
+}
+
+</script>
+ 
+
+
+
+</head>
+<body onload="do_on_load()">
+
+</body>
+
+</html>

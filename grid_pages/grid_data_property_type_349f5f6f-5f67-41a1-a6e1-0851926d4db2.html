@@ -1,0 +1,126 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="dhtmlx/dhtmlxlayout.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxlayout_dhx_skyblue.css"></link>
+<link rel="STYLESHEET" type="text/css" href="dhtmlx/dhtmlxgrid.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxgrid_dhx_skyblue.css"></link>
+<link rel="STYLESHEET" type="text/css" href="dhtmlx/dhtmlxtabbar.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxtoolbar_dhx_skyblue.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxform_dhx_skyblue.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxmessage_dhx_skyblue.css"></link>
+
+<script src="dhtmlx/dhtmlxcommon.js"></script>
+<script src="dhtmlx/dhtmlxlayout.js"></script>
+<script src="dhtmlx/dhtmlxcontainer.js"></script>
+<script src="dhtmlx/dhtmlxgrid.js"></script>        
+<script src="dhtmlx/dhtmlxgridcell.js"></script> 
+<script src="dhtmlx/dhtmlxgrid_filter.js"></script>
+<script src="dhtmlx/dhtmlxtoolbar.js"></script>
+<script src="dhtmlx/dhtmlxtabbar.js"></script>
+<script src="dhtmlx/dhtmlxform.js"></script>
+<script src="dhtmlx/dhtmlxmessage.js"></script>
+<script src="dhtmlx/dhtmlxgrid_export.js"></script>
+<script src="dhtmlx/dhtmlxgrid_nxml.js"></script>
+<script src="javascript/view.js"></script>
+
+
+
+<script src="ribbonbar/ribbonbar_DE_0a078780-bc09-11e3-a5e2-0800200c9a66.js"></script>
+
+
+<script language='javascript'>
+
+var main_layout;
+var main_grid;
+
+
+function do_on_load()
+{
+  
+main_layout= new dhtmlXLayoutObject(document.body, "3E");
+var cell_ribbonbar = main_layout.cells("a");
+var cell_detail = main_layout.cells("b");
+var cell_grid = main_layout.cells("c");
+main_layout.cells("a").setWidth("*");
+main_layout.cells("a").setHeight("85");
+main_layout.cells("b").setWidth("*");
+main_layout.cells("b").setHeight("200");
+main_layout.cells("a").fixSize(false,true);
+main_layout.cells("a").hideHeader();
+main_layout.cells("b").setText("Standart View data_property_type");
+var ribbon_bar = new cls_ribbonbar(main_layout.cells("a"),true,true);
+$KERNEL_VIEW.set_ribbon_bar(ribbon_bar);
+main_layout.cells("c").setWidth("*");
+main_layout.cells("c").setHeight("*");
+main_layout.cells("c").setText("Standart View data_property_type");
+main_grid = main_layout.cells("c").attachGrid();
+main_grid.setImagePath("dhtmlx/imgs/");
+var frm = cell_detail.attachForm();
+$KERNEL_VIEW.set_detail_form(frm);
+form_structure = [
+{type:"settings",position:"label-left", labelWidth: 200 , formWidth : "*"},
+{type: "fieldset",name:"data", label: "Data", list:[
+{type: "input", name: "data_property_type.tablename", label: "data_property_type.tablename", width : "500"}
+,{type: "input", name: "data_property_type.name", label: "data_property_type.name", width : "500"}
+,{type: "input", name: "data_property_type.datatype", label: "data_property_type.datatype", width : "500"}
+,{type: "input", name: "person.name", label: "person.name", width : "500"}
+,{type: "input", name: "data_property_type.defaultvalue", label: "data_property_type.defaultvalue", width : "500"}
+,{type: "input", name: "data_property_type.active", label: "data_property_type.active", width : "500"}
+,{type: "input", name: "data_property_type.lookuptablename", label: "data_property_type.lookuptablename", width : "500"}
+,{type: "input", name: "data_property_type.lookuptable_idfield", label: "data_property_type.lookuptable_idfield", width : "500"}
+,{type: "input", name: "data_property_type.lookuptable_namefield1", label: "data_property_type.lookuptable_namefield1", width : "500"}
+,{type: "input", name: "data_property_type.lookuptable_namefield2", label: "data_property_type.lookuptable_namefield2", width : "500"}
+,{type: "input", name: "data_property_type.lookuptable_namefield3", label: "data_property_type.lookuptable_namefield3", width : "500"}
+,{type: "input", name: "data_property_type.lookuptable_namefield4", label: "data_property_type.lookuptable_namefield4", width : "500"}
+,{type: "input", name: "data_property_type.lookuptable_namefield5", label: "data_property_type.lookuptable_namefield5", width : "500"}
+,{type: "input", name: "data_property_type.lookuptable_wherecondition", label: "data_property_type.lookuptable_wherecondition", width : "500"}
+]}
+];
+frm.loadStruct(form_structure, "json");
+
+frm.setFormReadOnly = function(readonly)
+{
+frm.is_readonly = readonly;
+this.setReadonly("data_property_type.id",readonly);
+this.setReadonly("data_property_type.tablename",readonly);
+this.setReadonly("data_property_type.name",readonly);
+this.setReadonly("data_property_type.datatype",readonly);
+this.setReadonly("person.name",readonly);
+this.setReadonly("data_property_type.defaultvalue",readonly);
+this.setReadonly("data_property_type.active",readonly);
+this.setReadonly("data_property_type.lookuptablename",readonly);
+this.setReadonly("data_property_type.lookuptable_idfield",readonly);
+this.setReadonly("data_property_type.lookuptable_namefield1",readonly);
+this.setReadonly("data_property_type.lookuptable_namefield2",readonly);
+this.setReadonly("data_property_type.lookuptable_namefield3",readonly);
+this.setReadonly("data_property_type.lookuptable_namefield4",readonly);
+this.setReadonly("data_property_type.lookuptable_namefield5",readonly);
+this.setReadonly("data_property_type.lookuptable_wherecondition",readonly);
+}
+main_grid.setHeader("data_property_type.tablename,data_property_type.name,data_property_type.datatype,person.name,data_property_type.defaultvalue,data_property_type.active,data_property_type.lookuptablename,data_property_type.lookuptable_idfield,data_property_type.lookuptable_namefield1,data_property_type.lookuptable_namefield2,data_property_type.lookuptable_namefield3,data_property_type.lookuptable_namefield4,data_property_type.lookuptable_namefield5,data_property_type.lookuptable_wherecondition");
+main_grid.setInitWidths("500,500,500,500,500,500,500,500,500,500,500,500,500,*");
+main_grid.setColumnIds("data_property_type.tablename,data_property_type.name,data_property_type.datatype,person.name,data_property_type.defaultvalue,data_property_type.active,data_property_type.lookuptablename,data_property_type.lookuptable_idfield,data_property_type.lookuptable_namefield1,data_property_type.lookuptable_namefield2,data_property_type.lookuptable_namefield3,data_property_type.lookuptable_namefield4,data_property_type.lookuptable_namefield5,data_property_type.lookuptable_wherecondition");
+main_grid.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left,left");
+main_grid.setColSorting("str,str,str,str,str,str,str,str,str,str,str,str,str,str");
+main_grid.setColTypes("ed,ed,ed,ed,ed,ch,ed,ed,ed,ed,ed,ed,ed,ed");
+main_grid.attachHeader("#text_search,#text_search,#text_search,#text_search,#text_search,,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search");
+main_grid.init();
+main_grid.setSkin("dhx_skyblue");
+$KERNEL_VIEW.set_main_grid(main_grid);
+$KERNEL_VIEW.init_view();
+main_grid.load("data_property_type.php?v=349f5f6f-5f67-41a1-a6e1-0851926d4db2&f=json","json");
+
+
+}
+
+</script>
+ 
+
+
+
+</head>
+<body onload="do_on_load()">
+
+</body>
+
+</html>

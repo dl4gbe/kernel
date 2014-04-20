@@ -1,0 +1,108 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="dhtmlx/dhtmlxlayout.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxlayout_dhx_skyblue.css"></link>
+<link rel="STYLESHEET" type="text/css" href="dhtmlx/dhtmlxgrid.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxgrid_dhx_skyblue.css"></link>
+<link rel="STYLESHEET" type="text/css" href="dhtmlx/dhtmlxtabbar.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxtoolbar_dhx_skyblue.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxform_dhx_skyblue.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxmessage_dhx_skyblue.css"></link>
+
+<script src="dhtmlx/dhtmlxcommon.js"></script>
+<script src="dhtmlx/dhtmlxlayout.js"></script>
+<script src="dhtmlx/dhtmlxcontainer.js"></script>
+<script src="dhtmlx/dhtmlxgrid.js"></script>        
+<script src="dhtmlx/dhtmlxgridcell.js"></script> 
+<script src="dhtmlx/dhtmlxgrid_filter.js"></script>
+<script src="dhtmlx/dhtmlxtoolbar.js"></script>
+<script src="dhtmlx/dhtmlxtabbar.js"></script>
+<script src="dhtmlx/dhtmlxform.js"></script>
+<script src="dhtmlx/dhtmlxmessage.js"></script>
+<script src="dhtmlx/dhtmlxgrid_export.js"></script>
+<script src="dhtmlx/dhtmlxgrid_nxml.js"></script>
+<script src="javascript/view.js"></script>
+
+
+
+<script src="ribbonbar/ribbonbar_DE_0a078780-bc09-11e3-a5e2-0800200c9a66.js"></script>
+
+
+<script language='javascript'>
+
+var main_layout;
+var main_grid;
+
+
+function do_on_load()
+{
+  
+main_layout= new dhtmlXLayoutObject(document.body, "3E");
+var cell_ribbonbar = main_layout.cells("a");
+var cell_detail = main_layout.cells("b");
+var cell_grid = main_layout.cells("c");
+main_layout.cells("a").setWidth("*");
+main_layout.cells("a").setHeight("85");
+main_layout.cells("b").setWidth("*");
+main_layout.cells("b").setHeight("200");
+main_layout.cells("a").fixSize(false,true);
+main_layout.cells("a").hideHeader();
+main_layout.cells("b").setText("Standart View config_group_item");
+var ribbon_bar = new cls_ribbonbar(main_layout.cells("a"),true,true);
+$KERNEL_VIEW.set_ribbon_bar(ribbon_bar);
+main_layout.cells("c").setWidth("*");
+main_layout.cells("c").setHeight("*");
+main_layout.cells("c").setText("Standart View config_group_item");
+main_grid = main_layout.cells("c").attachGrid();
+main_grid.setImagePath("dhtmlx/imgs/");
+var frm = cell_detail.attachForm();
+$KERNEL_VIEW.set_detail_form(frm);
+form_structure = [
+{type:"settings",position:"label-left", labelWidth: 200 , formWidth : "*"},
+{type: "fieldset",name:"data", label: "Data", list:[
+{type: "input", name: "config_group.name", label: "config_group.name", width : "500"}
+,{type: "input", name: "config_group_item.name", label: "config_group_item.name", width : "500"}
+,{type: "input", name: "config_group_item.table_name", label: "Tabellenname", width : "500"}
+,{type: "input", name: "config_group_item.path", label: "config_group_item.path", width : "500"}
+,{type: "input", name: "config_group_item.source", label: "config_group_item.source", width : "500"}
+]}
+];
+frm.loadStruct(form_structure, "json");
+
+frm.setFormReadOnly = function(readonly)
+{
+frm.is_readonly = readonly;
+this.setReadonly("config_group_item.id",readonly);
+this.setReadonly("config_group.name",readonly);
+this.setReadonly("config_group_item.name",readonly);
+this.setReadonly("config_group_item.table_name",readonly);
+this.setReadonly("config_group_item.path",readonly);
+this.setReadonly("config_group_item.source",readonly);
+}
+main_grid.setHeader("config_group.name,config_group_item.name,Tabellenname,config_group_item.path,config_group_item.source");
+main_grid.setInitWidths("500,500,500,500,*");
+main_grid.setColumnIds("config_group.name,config_group_item.name,config_group_item.table_name,config_group_item.path,config_group_item.source");
+main_grid.setColAlign("left,left,left,left,left");
+main_grid.setColSorting("str,str,str,str,str");
+main_grid.setColTypes("ed,ed,ed,ed,ed");
+main_grid.attachHeader("#text_search,#text_search,#text_search,#text_search,#text_search");
+main_grid.init();
+main_grid.setSkin("dhx_skyblue");
+$KERNEL_VIEW.set_main_grid(main_grid);
+$KERNEL_VIEW.init_view();
+main_grid.load("config_group_item.php?v=1c4b104f-bb93-416e-87a1-cc243f094e6a&f=json","json");
+
+
+}
+
+</script>
+ 
+
+
+
+</head>
+<body onload="do_on_load()">
+
+</body>
+
+</html>

@@ -1,0 +1,152 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="dhtmlx/dhtmlxlayout.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxlayout_dhx_skyblue.css"></link>
+<link rel="STYLESHEET" type="text/css" href="dhtmlx/dhtmlxgrid.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxgrid_dhx_skyblue.css"></link>
+<link rel="STYLESHEET" type="text/css" href="dhtmlx/dhtmlxtabbar.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxtoolbar_dhx_skyblue.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxform_dhx_skyblue.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxmessage_dhx_skyblue.css"></link>
+
+<script src="dhtmlx/dhtmlxcommon.js"></script>
+<script src="dhtmlx/dhtmlxlayout.js"></script>
+<script src="dhtmlx/dhtmlxcontainer.js"></script>
+<script src="dhtmlx/dhtmlxgrid.js"></script>        
+<script src="dhtmlx/dhtmlxgridcell.js"></script> 
+<script src="dhtmlx/dhtmlxgrid_filter.js"></script>
+<script src="dhtmlx/dhtmlxtoolbar.js"></script>
+<script src="dhtmlx/dhtmlxtabbar.js"></script>
+<script src="dhtmlx/dhtmlxform.js"></script>
+<script src="dhtmlx/dhtmlxmessage.js"></script>
+<script src="dhtmlx/dhtmlxgrid_export.js"></script>
+<script src="dhtmlx/dhtmlxgrid_nxml.js"></script>
+<script src="javascript/view.js"></script>
+
+
+
+<script src="ribbonbar/ribbonbar_DE_0a078780-bc09-11e3-a5e2-0800200c9a66.js"></script>
+
+
+<script language='javascript'>
+
+var main_layout;
+var main_grid;
+
+
+function do_on_load()
+{
+  
+main_layout= new dhtmlXLayoutObject(document.body, "3E");
+var cell_ribbonbar = main_layout.cells("a");
+var cell_detail = main_layout.cells("b");
+var cell_grid = main_layout.cells("c");
+main_layout.cells("a").setWidth("*");
+main_layout.cells("a").setHeight("85");
+main_layout.cells("b").setWidth("*");
+main_layout.cells("b").setHeight("200");
+main_layout.cells("a").fixSize(false,true);
+main_layout.cells("a").hideHeader();
+main_layout.cells("b").setText("Standart View contract_pos");
+var ribbon_bar = new cls_ribbonbar(main_layout.cells("a"),true,true);
+$KERNEL_VIEW.set_ribbon_bar(ribbon_bar);
+main_layout.cells("c").setWidth("*");
+main_layout.cells("c").setHeight("*");
+main_layout.cells("c").setText("Standart View contract_pos");
+main_grid = main_layout.cells("c").attachGrid();
+main_grid.setImagePath("dhtmlx/imgs/");
+var frm = cell_detail.attachForm();
+$KERNEL_VIEW.set_detail_form(frm);
+form_structure = [
+{type:"settings",position:"label-left", labelWidth: 200 , formWidth : "*"},
+{type: "fieldset",name:"data", label: "Data", list:[
+{type: "input", name: "contract.contractno", label: "contract.contractno", width : "500"}
+,{type: "input", name: "contract_pos.startdate", label: "contract_pos.startdate", width : "500"}
+,{type: "input", name: "contract_pos.maincontract", label: "contract_pos.maincontract", width : "500"}
+,{type: "input", name: "contract_pos.paymenttype", label: "contract_pos.paymenttype", width : "500"}
+,{type: "input", name: "contract_pos.enddate", label: "contract_pos.enddate", width : "500"}
+,{type: "input", name: "contract_pos.paymentstart", label: "contract_pos.paymentstart", width : "500"}
+,{type: "input", name: "contract_pos.cancelrequestreceived", label: "contract_pos.cancelrequestreceived", width : "500"}
+,{type: "input", name: "contract_pos.extendable", label: "contract_pos.extendable", width : "500"}
+,{type: "input", name: "article.name", label: "article.name", width : "500"}
+,{type: "input", name: "contract_template_pos.name", label: "contract_template_pos.name", width : "500"}
+,{type: "input", name: "contract_pos.payday", label: "contract_pos.payday", width : "500"}
+,{type: "input", name: "contract_pos.paydow", label: "contract_pos.paydow", width : "500"}
+,{type: "input", name: "contract_pos.durationinmonths", label: "contract_pos.durationinmonths", width : "500"}
+,{type: "input", name: "contract_pos.extensioninmonth", label: "contract_pos.extensioninmonth", width : "500"}
+,{type: "input", name: "contract_pos.amountperday", label: "contract_pos.amountperday", width : "500"}
+,{type: "input", name: "contract_pos.amountperweek", label: "contract_pos.amountperweek", width : "500"}
+,{type: "input", name: "contract_pos.amountpermonth", label: "contract_pos.amountpermonth", width : "500"}
+,{type: "input", name: "contract_pos.amountperyear", label: "contract_pos.amountperyear", width : "500"}
+,{type: "input", name: "contract_pos.increasepermonth", label: "contract_pos.increasepermonth", width : "500"}
+,{type: "input", name: "contract_pos.increaseperyear", label: "contract_pos.increaseperyear", width : "500"}
+,{type: "input", name: "contract_pos.freeunitsperday", label: "contract_pos.freeunitsperday", width : "500"}
+,{type: "input", name: "contract_pos.freeunitsperweek", label: "contract_pos.freeunitsperweek", width : "500"}
+,{type: "input", name: "contract_pos.freeunitspermonth", label: "contract_pos.freeunitspermonth", width : "500"}
+,{type: "input", name: "contract_pos.freeunitsperyear", label: "contract_pos.freeunitsperyear", width : "500"}
+,{type: "input", name: "contract_pos.paymentinterval", label: "contract_pos.paymentinterval", width : "500"}
+,{type: "input", name: "contract_pos.paymentcycle", label: "contract_pos.paymentcycle", width : "500"}
+,{type: "input", name: "contract_pos.paymentsduringrestperiod", label: "contract_pos.paymentsduringrestperiod", width : "500"}
+]}
+];
+frm.loadStruct(form_structure, "json");
+
+frm.setFormReadOnly = function(readonly)
+{
+frm.is_readonly = readonly;
+this.setReadonly("contract_pos.id",readonly);
+this.setReadonly("contract.contractno",readonly);
+this.setReadonly("contract_pos.startdate",readonly);
+this.setReadonly("contract_pos.maincontract",readonly);
+this.setReadonly("contract_pos.paymenttype",readonly);
+this.setReadonly("contract_pos.enddate",readonly);
+this.setReadonly("contract_pos.paymentstart",readonly);
+this.setReadonly("contract_pos.cancelrequestreceived",readonly);
+this.setReadonly("contract_pos.extendable",readonly);
+this.setReadonly("article.name",readonly);
+this.setReadonly("contract_template_pos.name",readonly);
+this.setReadonly("contract_pos.payday",readonly);
+this.setReadonly("contract_pos.paydow",readonly);
+this.setReadonly("contract_pos.durationinmonths",readonly);
+this.setReadonly("contract_pos.extensioninmonth",readonly);
+this.setReadonly("contract_pos.amountperday",readonly);
+this.setReadonly("contract_pos.amountperweek",readonly);
+this.setReadonly("contract_pos.amountpermonth",readonly);
+this.setReadonly("contract_pos.amountperyear",readonly);
+this.setReadonly("contract_pos.increasepermonth",readonly);
+this.setReadonly("contract_pos.increaseperyear",readonly);
+this.setReadonly("contract_pos.freeunitsperday",readonly);
+this.setReadonly("contract_pos.freeunitsperweek",readonly);
+this.setReadonly("contract_pos.freeunitspermonth",readonly);
+this.setReadonly("contract_pos.freeunitsperyear",readonly);
+this.setReadonly("contract_pos.paymentinterval",readonly);
+this.setReadonly("contract_pos.paymentcycle",readonly);
+this.setReadonly("contract_pos.paymentsduringrestperiod",readonly);
+}
+main_grid.setHeader("contract.contractno,contract_pos.startdate,contract_pos.maincontract,contract_pos.paymenttype,contract_pos.enddate,contract_pos.paymentstart,contract_pos.cancelrequestreceived,contract_pos.extendable,article.name,contract_template_pos.name,contract_pos.payday,contract_pos.paydow,contract_pos.durationinmonths,contract_pos.extensioninmonth,contract_pos.amountperday,contract_pos.amountperweek,contract_pos.amountpermonth,contract_pos.amountperyear,contract_pos.increasepermonth,contract_pos.increaseperyear,contract_pos.freeunitsperday,contract_pos.freeunitsperweek,contract_pos.freeunitspermonth,contract_pos.freeunitsperyear,contract_pos.paymentinterval,contract_pos.paymentcycle,contract_pos.paymentsduringrestperiod");
+main_grid.setInitWidths("500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,*");
+main_grid.setColumnIds("contract.contractno,contract_pos.startdate,contract_pos.maincontract,contract_pos.paymenttype,contract_pos.enddate,contract_pos.paymentstart,contract_pos.cancelrequestreceived,contract_pos.extendable,article.name,contract_template_pos.name,contract_pos.payday,contract_pos.paydow,contract_pos.durationinmonths,contract_pos.extensioninmonth,contract_pos.amountperday,contract_pos.amountperweek,contract_pos.amountpermonth,contract_pos.amountperyear,contract_pos.increasepermonth,contract_pos.increaseperyear,contract_pos.freeunitsperday,contract_pos.freeunitsperweek,contract_pos.freeunitspermonth,contract_pos.freeunitsperyear,contract_pos.paymentinterval,contract_pos.paymentcycle,contract_pos.paymentsduringrestperiod");
+main_grid.setColAlign("left,left,left,left,left,left,left,left,left,left,left,left,left,left,right,right,right,right,left,left,left,left,left,left,left,left,left");
+main_grid.setColSorting("str,str,str,str,str,str,str,str,str,str,str,str,str,str,int,int,int,int,str,str,str,str,str,str,str,str,str");
+main_grid.setColTypes("ed,ed,ch,ed,ed,ed,ed,ch,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ed,ch");
+main_grid.attachHeader("#text_search,#text_search,,#text_search,#text_search,#text_search,#text_search,,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,");
+main_grid.init();
+main_grid.setSkin("dhx_skyblue");
+$KERNEL_VIEW.set_main_grid(main_grid);
+$KERNEL_VIEW.init_view();
+main_grid.load("contract_pos.php?v=efaf393a-7b2c-4a3c-b594-d4fa34390329&f=json","json");
+
+
+}
+
+</script>
+ 
+
+
+
+</head>
+<body onload="do_on_load()">
+
+</body>
+
+</html>
