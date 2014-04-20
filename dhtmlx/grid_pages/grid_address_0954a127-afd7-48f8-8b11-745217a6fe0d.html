@@ -1,0 +1,120 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="dhtmlx/dhtmlxlayout.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxlayout_dhx_skyblue.css"></link>
+<link rel="STYLESHEET" type="text/css" href="dhtmlx/dhtmlxgrid.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxgrid_dhx_skyblue.css"></link>
+<link rel="STYLESHEET" type="text/css" href="dhtmlx/dhtmlxtabbar.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxtoolbar_dhx_skyblue.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxform_dhx_skyblue.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxmessage_dhx_skyblue.css"></link>
+
+<script src="dhtmlx/dhtmlxcommon.js"></script>
+<script src="dhtmlx/dhtmlxlayout.js"></script>
+<script src="dhtmlx/dhtmlxcontainer.js"></script>
+<script src="dhtmlx/dhtmlxgrid.js"></script>        
+<script src="dhtmlx/dhtmlxgridcell.js"></script> 
+<script src="dhtmlx/dhtmlxgrid_filter.js"></script>
+<script src="dhtmlx/dhtmlxtoolbar.js"></script>
+<script src="dhtmlx/dhtmlxtabbar.js"></script>
+<script src="dhtmlx/dhtmlxform.js"></script>
+<script src="dhtmlx/dhtmlxmessage.js"></script>
+<script src="dhtmlx/dhtmlxgrid_export.js"></script>
+<script src="dhtmlx/dhtmlxgrid_nxml.js"></script>
+<script src="javascript/view.js"></script>
+
+
+
+<script src="ribbonbar/ribbonbar_DE_0a078780-bc09-11e3-a5e2-0800200c9a66.js"></script>
+
+
+<script language='javascript'>
+
+var main_layout;
+var main_grid;
+
+
+function do_on_load()
+{
+  
+main_layout= new dhtmlXLayoutObject(document.body, "3E");
+var cell_ribbonbar = main_layout.cells("a");
+var cell_detail = main_layout.cells("b");
+var cell_grid = main_layout.cells("c");
+main_layout.cells("a").setWidth("*");
+main_layout.cells("a").setHeight("85");
+main_layout.cells("b").setWidth("*");
+main_layout.cells("b").setHeight("200");
+main_layout.cells("a").fixSize(false,true);
+main_layout.cells("a").hideHeader();
+main_layout.cells("b").setText("Standart View address");
+var ribbon_bar = new cls_ribbonbar(main_layout.cells("a"),true,true);
+$KERNEL_VIEW.set_ribbon_bar(ribbon_bar);
+main_layout.cells("c").setWidth("*");
+main_layout.cells("c").setHeight("*");
+main_layout.cells("c").setText("Standart View address");
+main_grid = main_layout.cells("c").attachGrid();
+main_grid.setImagePath("dhtmlx/imgs/");
+var frm = cell_detail.attachForm();
+$KERNEL_VIEW.set_detail_form(frm);
+form_structure = [
+{type:"settings",position:"label-left", labelWidth: 200 , formWidth : "*"},
+{type: "fieldset",name:"data", label: "Data", list:[
+{type: "input", name: "address.id_data", label: "address.id_data", width : "500"}
+,{type: "input", name: "address.address1", label: "address.address1", width : "500"}
+,{type: "input", name: "address.address2", label: "address.address2", width : "500"}
+,{type: "input", name: "address.zip", label: "address.zip", width : "500"}
+,{type: "input", name: "address.city", label: "address.city", width : "500"}
+,{type: "input", name: "country.name", label: "country.name", width : "500"}
+,{type: "input", name: "address.main", label: "address.main", width : "500"}
+,{type: "input", name: "address_type.name", label: "address_type.name", width : "500"}
+,{type: "input", name: "address.lat", label: "address.lat", width : "500"}
+,{type: "input", name: "address.lon", label: "address.lon", width : "500"}
+,{type: "input", name: "address.open_geo_db_id", label: "address.open_geo_db_id", width : "500"}
+]}
+];
+frm.loadStruct(form_structure, "json");
+
+frm.setFormReadOnly = function(readonly)
+{
+frm.is_readonly = readonly;
+this.setReadonly("address.id",readonly);
+this.setReadonly("address.id_data",readonly);
+this.setReadonly("address.address1",readonly);
+this.setReadonly("address.address2",readonly);
+this.setReadonly("address.zip",readonly);
+this.setReadonly("address.city",readonly);
+this.setReadonly("country.name",readonly);
+this.setReadonly("address.main",readonly);
+this.setReadonly("address_type.name",readonly);
+this.setReadonly("address.lat",readonly);
+this.setReadonly("address.lon",readonly);
+this.setReadonly("address.open_geo_db_id",readonly);
+}
+main_grid.setHeader("address.id_data,address.address1,address.address2,address.zip,address.city,country.name,address.main,address_type.name,address.lat,address.lon,address.open_geo_db_id");
+main_grid.setInitWidths("500,500,500,500,500,500,500,500,500,500,*");
+main_grid.setColumnIds("address.id_data,address.address1,address.address2,address.zip,address.city,country.name,address.main,address_type.name,address.lat,address.lon,address.open_geo_db_id");
+main_grid.setColAlign("left,left,left,left,left,left,left,left,left,left,left");
+main_grid.setColSorting("str,str,str,str,str,str,str,str,str,str,str");
+main_grid.setColTypes("ed,ed,ed,ed,ed,ed,ch,ed,ed,ed,ed");
+main_grid.attachHeader("#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,,#text_search,#text_search,#text_search,#text_search");
+main_grid.init();
+main_grid.setSkin("dhx_skyblue");
+$KERNEL_VIEW.set_main_grid(main_grid);
+$KERNEL_VIEW.init_view();
+main_grid.load("address.php?v=0954a127-afd7-48f8-8b11-745217a6fe0d&f=json","json");
+
+
+}
+
+</script>
+ 
+
+
+
+</head>
+<body onload="do_on_load()">
+
+</body>
+
+</html>

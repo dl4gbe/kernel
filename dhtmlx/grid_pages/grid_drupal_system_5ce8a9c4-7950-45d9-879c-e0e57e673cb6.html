@@ -1,0 +1,108 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="dhtmlx/dhtmlxlayout.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxlayout_dhx_skyblue.css"></link>
+<link rel="STYLESHEET" type="text/css" href="dhtmlx/dhtmlxgrid.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxgrid_dhx_skyblue.css"></link>
+<link rel="STYLESHEET" type="text/css" href="dhtmlx/dhtmlxtabbar.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxtoolbar_dhx_skyblue.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxform_dhx_skyblue.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxmessage_dhx_skyblue.css"></link>
+
+<script src="dhtmlx/dhtmlxcommon.js"></script>
+<script src="dhtmlx/dhtmlxlayout.js"></script>
+<script src="dhtmlx/dhtmlxcontainer.js"></script>
+<script src="dhtmlx/dhtmlxgrid.js"></script>        
+<script src="dhtmlx/dhtmlxgridcell.js"></script> 
+<script src="dhtmlx/dhtmlxgrid_filter.js"></script>
+<script src="dhtmlx/dhtmlxtoolbar.js"></script>
+<script src="dhtmlx/dhtmlxtabbar.js"></script>
+<script src="dhtmlx/dhtmlxform.js"></script>
+<script src="dhtmlx/dhtmlxmessage.js"></script>
+<script src="dhtmlx/dhtmlxgrid_export.js"></script>
+<script src="dhtmlx/dhtmlxgrid_nxml.js"></script>
+<script src="javascript/view.js"></script>
+
+
+
+
+
+<script language='javascript'>
+
+var main_layout;
+var main_grid;
+
+
+function do_on_load()
+{
+  
+main_layout= new dhtmlXLayoutObject(document.body, "2E");
+var cell_detail = main_layout.cells("a");
+var cell_grid = main_layout.cells("c");
+main_layout.cells("a").setWidth("*");
+main_layout.cells("a").setHeight("200");
+main_layout.cells("a").setText("Standart View drupal_system");
+main_layout.cells("c").setWidth("*");
+main_layout.cells("c").setHeight("*");
+main_layout.cells("c").setText("Standart View drupal_system");
+main_grid = main_layout.cells("c").attachGrid();
+main_grid.setImagePath("dhtmlx/imgs/");
+var frm = cell_detail.attachForm();
+$KERNEL_VIEW.set_detail_form(frm);
+form_structure = [
+{type:"settings",position:"label-left", labelWidth: 200 , formWidth : "*"},
+{type: "fieldset",name:"data", label: "Data", list:[
+{type: "input", name: "drupal_system.filename", label: "drupal_system.filename", width : "500"}
+,{type: "input", name: "drupal_system.name", label: "drupal_system.name", width : "500"}
+,{type: "input", name: "drupal_system.type", label: "drupal_system.type", width : "500"}
+,{type: "input", name: "drupal_system.owner", label: "drupal_system.owner", width : "500"}
+,{type: "input", name: "drupal_system.status", label: "drupal_system.status", width : "500"}
+,{type: "input", name: "drupal_system.bootstrap", label: "drupal_system.bootstrap", width : "500"}
+,{type: "input", name: "drupal_system.schema_version", label: "drupal_system.schema_version", width : "500"}
+,{type: "input", name: "drupal_system.weight", label: "drupal_system.weight", width : "500"}
+,{type: "input", name: "drupal_system.info", label: "drupal_system.info", width : "500"}
+]}
+];
+frm.loadStruct(form_structure, "json");
+
+frm.setFormReadOnly = function(readonly)
+{
+frm.is_readonly = readonly;
+this.setReadonly("drupal_system.filename",readonly);
+this.setReadonly("drupal_system.name",readonly);
+this.setReadonly("drupal_system.type",readonly);
+this.setReadonly("drupal_system.owner",readonly);
+this.setReadonly("drupal_system.status",readonly);
+this.setReadonly("drupal_system.bootstrap",readonly);
+this.setReadonly("drupal_system.schema_version",readonly);
+this.setReadonly("drupal_system.weight",readonly);
+this.setReadonly("drupal_system.info",readonly);
+this.setReadonly("drupal_system.id",readonly);
+}
+main_grid.setHeader("drupal_system.filename,drupal_system.name,drupal_system.type,drupal_system.owner,drupal_system.status,drupal_system.bootstrap,drupal_system.schema_version,drupal_system.weight,drupal_system.info");
+main_grid.setInitWidths("500,500,500,500,500,500,500,500,*");
+main_grid.setColumnIds("drupal_system.filename,drupal_system.name,drupal_system.type,drupal_system.owner,drupal_system.status,drupal_system.bootstrap,drupal_system.schema_version,drupal_system.weight,drupal_system.info");
+main_grid.setColAlign("left,left,left,left,left,left,left,left,left");
+main_grid.setColSorting("str,str,str,str,str,str,str,str,str");
+main_grid.setColTypes("ed,ed,ed,ed,ed,ed,ed,ed,ed");
+main_grid.attachHeader("#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search,#text_search");
+main_grid.init();
+main_grid.setSkin("dhx_skyblue");
+$KERNEL_VIEW.set_main_grid(main_grid);
+$KERNEL_VIEW.init_view();
+main_grid.load("drupal_system.php?v=5ce8a9c4-7950-45d9-879c-e0e57e673cb6&f=json","json");
+
+
+}
+
+</script>
+ 
+
+
+
+</head>
+<body onload="do_on_load()">
+
+</body>
+
+</html>

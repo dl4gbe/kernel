@@ -1,0 +1,104 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="dhtmlx/dhtmlxlayout.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxlayout_dhx_skyblue.css"></link>
+<link rel="STYLESHEET" type="text/css" href="dhtmlx/dhtmlxgrid.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxgrid_dhx_skyblue.css"></link>
+<link rel="STYLESHEET" type="text/css" href="dhtmlx/dhtmlxtabbar.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxtoolbar_dhx_skyblue.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxform_dhx_skyblue.css"></link>
+<link rel="stylesheet" type="text/css" href="dhtmlx/skins/dhtmlxmessage_dhx_skyblue.css"></link>
+
+<script src="dhtmlx/dhtmlxcommon.js"></script>
+<script src="dhtmlx/dhtmlxlayout.js"></script>
+<script src="dhtmlx/dhtmlxcontainer.js"></script>
+<script src="dhtmlx/dhtmlxgrid.js"></script>        
+<script src="dhtmlx/dhtmlxgridcell.js"></script> 
+<script src="dhtmlx/dhtmlxgrid_filter.js"></script>
+<script src="dhtmlx/dhtmlxtoolbar.js"></script>
+<script src="dhtmlx/dhtmlxtabbar.js"></script>
+<script src="dhtmlx/dhtmlxform.js"></script>
+<script src="dhtmlx/dhtmlxmessage.js"></script>
+<script src="dhtmlx/dhtmlxgrid_export.js"></script>
+<script src="dhtmlx/dhtmlxgrid_nxml.js"></script>
+<script src="javascript/view.js"></script>
+
+
+
+
+
+<script language='javascript'>
+
+var main_layout;
+var main_grid;
+
+
+function do_on_load()
+{
+  
+main_layout= new dhtmlXLayoutObject(document.body, "2E");
+var cell_detail = main_layout.cells("a");
+var cell_grid = main_layout.cells("c");
+main_layout.cells("a").setWidth("*");
+main_layout.cells("a").setHeight("200");
+main_layout.cells("a").setText("Standart View sessions");
+main_layout.cells("c").setWidth("*");
+main_layout.cells("c").setHeight("*");
+main_layout.cells("c").setText("Standart View sessions");
+main_grid = main_layout.cells("c").attachGrid();
+main_grid.setImagePath("dhtmlx/imgs/");
+var frm = cell_detail.attachForm();
+$KERNEL_VIEW.set_detail_form(frm);
+form_structure = [
+{type:"settings",position:"label-left", labelWidth: 200 , formWidth : "*"},
+{type: "fieldset",name:"data", label: "Data", list:[
+{type: "input", name: "sessions.uid", label: "sessions.uid", width : "500"}
+,{type: "input", name: "sessions.sid", label: "sessions.uid", width : "500"}
+,{type: "input", name: "sessions.ssid", label: "sessions.uid", width : "500"}
+,{type: "input", name: "sessions.hostname", label: "sessions.uid", width : "500"}
+,{type: "input", name: "sessions.timestamp", label: "sessions.uid", width : "500"}
+,{type: "input", name: "sessions.cache", label: "sessions.uid", width : "500"}
+,{type: "input", name: "sessions.session", label: "sessions.uid", width : "500"}
+]}
+];
+frm.loadStruct(form_structure, "json");
+
+frm.setFormReadOnly = function(readonly)
+{
+frm.is_readonly = readonly;
+this.setReadonly("sessions.id",readonly);
+this.setReadonly("sessions.uid",readonly);
+this.setReadonly("sessions.sid",readonly);
+this.setReadonly("sessions.ssid",readonly);
+this.setReadonly("sessions.hostname",readonly);
+this.setReadonly("sessions.timestamp",readonly);
+this.setReadonly("sessions.cache",readonly);
+this.setReadonly("sessions.session",readonly);
+}
+main_grid.setHeader("");
+main_grid.setInitWidths("");
+main_grid.setColumnIds("");
+main_grid.setColAlign("");
+main_grid.setColSorting("");
+main_grid.setColTypes("");
+main_grid.attachHeader("");
+main_grid.init();
+main_grid.setSkin("dhx_skyblue");
+$KERNEL_VIEW.set_main_grid(main_grid);
+$KERNEL_VIEW.init_view();
+main_grid.load("sessions.php?v=f7b357a4-0ad5-4743-8ac5-fb21b156d62c&f=json","json");
+
+
+}
+
+</script>
+ 
+
+
+
+</head>
+<body onload="do_on_load()">
+
+</body>
+
+</html>
