@@ -1,0 +1,180 @@
+<?php
+
+
+/**
+* @file
+* A block module that displays a car configurator.
+*/
+
+
+function car_configurator_user_login(&$edit, $account) 
+{
+
+ if (!isset($_POST['form_id']) || $_POST['form_id'] != 'user_pass_reset' || variable_get('login_destination_immediate_redirect', FALSE)) 
+ {
+    //login_destination_perform_redirect('login');
+	
+	car_configurator_lists_session('PAGE','NONE');
+	
+ }
+
+}
+
+
+
+/**
+* Implements hook_help().
+*
+* Displays help and module information.
+*
+* @param path
+*   Which path of the site we're using to display help
+* @param arg
+*   Array that holds the current path as returned from arg() function
+*/
+function car_configurator_help($path, $arg) 
+{
+  switch ($path) 
+  {
+    case "admin/help#car_configurator":
+      return '<p>' . t("Displays a car configurator") . '</p>';
+      break;
+  }
+}
+
+/**
+* Implements hook_block_info().
+*/
+function car_configurator_block_info() 
+{
+  $blocks['car_configurator'] = array(
+    // The name that will appear in the block list.
+    'info' => t('Block Car Configurator'),
+    // Default setting.
+    'cache' => DRUPAL_CACHE_PER_ROLE,
+  );
+  return $blocks;
+}
+
+
+/**
+* Implements hook_block_view().
+*/
+function car_configurator_block_view($delta = '') 
+{
+
+  global $user;
+
+  $block = array();
+
+  switch ($delta) 
+  {
+    case 'car_configurator':
+      
+      if (user_access('access content')) 
+	  {
+	  
+	    if (car_configurator_is_user_logged_in())
+		{
+		  $block['subject'] = t('Car Configurator');
+  		  $content = get_car_configurator_content($user->uid);
+		  $block['content'] = $content;
+		  return $block;	
+		}
+		else
+		{
+		
+
+		  car_configurator_lists_session('PAGE','CAR_CONFIGURATOR');
+		  $block['subject'] = t('Um den Car Configurator benutzen zu können müssen Sie sich zuerst anmelden');
+		  $content = car_configurator_get_not_logged_in();
+		  $block['content'] = $content;
+		  return $block;	
+		
+		}
+		
+	   
+      }		
+  }	
+  
+
+}
+
+
+
+
+function car_configurator_is_user_logged_in()
+{
+  global $user;
+
+  if ( $user->uid ) 
+  {
+    return true;	
+  }
+  return false;  
+}
+
+function car_configurator_get_not_logged_in()
+{
+
+
+  //$content = t('Sie sind nicht eingeloggt') . PHP_EOL;
+  //$content .= "</br>";
+  //$content .= "</br>";
+  
+  $content = drupal_get_form('user_login_block');
+  
+  return $content;
+
+}
+
+function get_car_configurator_url($uid)
+{
+
+//carneoo2konfigdev.ecar-manager.de
+
+
+$url = "http://cc.carneoo.de/?uebid=$uid";
+
+return $url;
+
+}
+
+
+
+function get_car_configurator_content($uid)
+{
+
+	  
+	    $content = '' . PHP_EOL;
+		$content .= '<iframe frameborder="0"' . PHP_EOL;
+		$content .= 'id="blockrandom"' . PHP_EOL;
+		$content .= 'src="' . get_car_configurator_url($uid) . "'" . PHP_EOL;
+		$content .= 'name=""' . PHP_EOL;
+		$content .= 'width="100%"' . PHP_EOL;
+		$content .= 'height="2000"' . PHP_EOL;
+		$content .= 'scrolling="no"' . PHP_EOL;
+		$content .= 'class="wrapper"' . PHP_EOL;
+		$content .= '</iframe>' . PHP_EOL ;
+		$content .= '';
+		
+		return $content;
+
+
+}
+
+
+function car_configurator_lists_session($key, $value = NULL) 
+{
+  static $storage;
+  if ($value) 
+  {
+    $storage[$key] = $value ;
+    $_SESSION['lists'][$key] = $value ;   // I use 'lists' in case some other module uses 'type' in $_SESSION
+  }
+  else if (empty($storage[$key]) && isset($_SESSION['lists'][$key])) 
+  {
+    $storage[$key] = $_SESSION['lists'][$key];
+  }
+  return $storage[$key];
+}

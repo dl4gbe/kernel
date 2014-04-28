@@ -1,0 +1,6 @@
+name = Car Configurator
+description = Car Configurator
+core = 7.x
+
+files[] = car_configurator.install
+files[] = car_configurator.module

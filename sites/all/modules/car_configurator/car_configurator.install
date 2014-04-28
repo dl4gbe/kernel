@@ -1,0 +1,148 @@
+<?php
+
+function car_configurator_schema()
+{
+
+}
+
+
+function car_configurator_enable() 
+{
+  $t = get_t();
+}
+
+
+function car_configurator_install() 
+{
+
+module_load_include('inc', 'node', 'content_types');
+
+ db_update('system')
+    ->condition('name', 'car_configurator')
+    ->condition('type', 'module')
+    ->fields(array('weight' => -1))
+    ->execute();
+
+// runs in both the installer and runtime
+  $t = get_t(); 
+
+  $car_configuration = 'car_configurator';
+
+  // define the node type
+  $car_configuration_type = array(
+    'type' => $car_configuration,
+    'name' => $t('car_configurator'),// Display name of the content type
+    'base' => 'node_content',
+    'title_label' => $t('Car Configuration'),
+    'description' => $t('To add a car Configuration.'),
+    'custom' => TRUE,
+  );
+
+  // set other node defaults not declared above
+  $content_type = node_type_set_defaults($car_configuration_type);
+  // save the content type
+  node_type_save($content_type);
+  // add the body field
+  
+  $body_type = $t('Body');
+  
+  
+  node_add_body_field($content_type,$body_type);
+ 
+  
+}  
+
+function car_configurator_uninstall()
+{
+
+$instances = field_info_instances('comment', 'comment_node_car_configurator');
+foreach ($instances as $instance_name => $instance) 
+  {
+    field_delete_instance($instance);
+  }
+
+  $result = db_query("SELECT n.nid FROM {node} n WHERE n.type = :type", array(':type' => 'car_configurator'));
+
+  $nids = array();
+
+  foreach ($result as $item) {
+    array_push($nids, $item->nid);
+  }
+
+  if (count($nids)) {
+    node_delete_multiple($nids);
+  }
+
+  drupal_uninstall_schema('car_configurator');  
+  
+  
+} 
+
+function car_configurator_entity_info() 
+{
+
+}
+
+function car_configurator_node_info()
+{
+    return array(
+        'car_configurator'=>array(
+            'name'=> t('car_configurator'),
+            'base'=>'car_configurator',
+            'description'=>t('Create car configuration type'),
+            'has_title'=>TRUE,
+            'title_label'=>t('MY Car Configuration'),
+            'help'=>t('Enter the Car Configuration title and description of the car'),
+        ),
+    );
+	
+}	
+
+function car_configurator_permission()
+{
+    return array(
+        'create new car configuration'=>array(
+            'title'=>t('create new car_configuration'),
+            'description'=>t('create new car_configuration'),),
+         'edit own car_configuration'=>array(
+            'title'=>t('edit own car_configuration'),
+            'description'=>t('edit own car_configuration'),),
+         'delete own car_configuration'=>array(
+            'title'=>t('delete own car_configuration'),
+            'description'=> t('delete own car_configuration'),),
+          'delete any car_configuration'=>array(
+            'title'=>t('delete any car_configuration'),
+            'description'=> t('delete any car_configuration'),),
+    );
+}
+
+function car_configurator_form($node , $form_state)
+{
+  // drupal default provide tile and body fields:
+  return node_content_form($node,$form_state);
+}
+
+function car_configurator_node_access($op, $node, $account) 
+{
+   $is_author = $account->uid == $node->uid;
+   switch ($op) {
+   case 'create':
+        if (user_access('create car configuration', $account)) {
+        return NODE_ACCESS_ALLOW;
+        }
+   case 'update':
+        if (user_access('edit car configuration', $account) && $is_author ||
+        user_access('edit any car configuration', $account)) {
+        return NODE_ACCESS_ALLOW;
+        }
+
+	case 'delete':
+    
+	if (user_access('delete own car configuration', $account) && $is_author ||
+    user_access('delete any car configuration', $account)) 
+	{
+		return NODE_ACCESS_ALLOW;
+    }
+    }
+}	
+	
